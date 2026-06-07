@@ -149,10 +149,10 @@ img{max-width:100%;height:auto;display:block}a{text-decoration:none;color:inheri
 .dream-header{text-align:center;margin-bottom:clamp(40px,6vw,64px)}
 .dream-header .section-subtitle{margin:0 auto}
 .timeline{position:relative;max-width:760px;margin:0 auto}
-.timeline-bg-line{position:absolute;left:19px;top:0;bottom:-18vh;width:2.6px;background:rgba(0,128,72,.28)}
+.timeline-bg-line{position:absolute;left:19px;top:0;bottom:-18vh;width:2.6px;background:rgba(0,128,72,.28);z-index:1}
 .timeline-track{position:absolute;left:19px;top:0;width:2.6px;height:0;background:#026035;z-index:10}
-.timeline-item{display:grid;grid-template-columns:40px 1fr;gap:0 20px;margin-bottom:48px;position:relative;align-items:start}
-.timeline-node{display:flex;justify-content:center;z-index:2}
+.timeline-item{display:grid;grid-template-columns:40px 1fr;gap:0 20px;margin-bottom:48px;position:relative;align-items:start;z-index:11}
+.timeline-node{display:flex;justify-content:center;z-index:11;position:relative}
 .timeline-circle{width:40px;height:40px;border-radius:50%;background:#00a055;box-shadow:0 0 0 6px var(--bg-dark);flex-shrink:0}
 .sp-br { display: none; }.sp-br-380{display:none}.sp-br-385{display:none}.sp-br-410{display:none}.sp-br-525{display:none}.sp-br-565{display:none}.sp-br-621{display:none}.sp-br-610{display:none}
 .timeline-time{font-family:var(--font-display);font-size:1.59375rem;font-weight:700;color:#00a055;height:40px;display:flex;align-items:center;padding-left:8px}
@@ -275,6 +275,8 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
 .form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted);font-size:.875rem}
 .form-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%234A5A4A'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;padding-right:44px;cursor:pointer}
 .form-textarea{resize:vertical;min-height:120px;line-height:1.9}
+input[type="date"].form-input{cursor:pointer;position:relative}
+input[type="date"].form-input::-webkit-calendar-picker-indicator{position:absolute;top:0;left:0;right:0;bottom:0;width:auto;height:auto;color:transparent;background:transparent;cursor:pointer}
 .form-divider{border:none;border-top:1px solid var(--border-light);margin:8px 0 28px}
 .form-notice{background:rgba(0,96,54,.04);border:1px solid rgba(0,96,54,.15);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:28px}
 .form-notice p{font-size:.875rem;color:var(--text-muted);line-height:2;margin:0}
@@ -285,6 +287,9 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
 .form-agree a{color:var(--accent-primary);text-decoration:underline}
 .form-submit-wrap{text-align:center;margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .form-submit-note{font-size:.875rem;color:var(--text-muted);font-weight:600}
+#f-submit{transition:background .3s,opacity .3s}
+#f-submit:not(.is-ready){background:#b2bbb5!important;pointer-events:none;cursor:not-allowed}
+#f-submit.is-ready{background:var(--accent-primary)!important}
 </style>
 
     <!-- LP識別用 dataLayer（GTMでのLP別フィルタリングに使用） -->
@@ -317,7 +322,7 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
 <body>
 <header class="header" id="header"><a href="https://pr-h.net/" class="header-logo" target="_blank" rel="noopener"><img src="parts/logo.png" alt="Principal Home" style="max-height:19px;width:100%;max-width:fit-content;display:block;"></a><div class="header-actions"><a href="tel:0120021541" class="header-phone-cta"><span class="header-phone-num"><span class="phone-icon">☎︎</span>0120-021-541</span> <span class="header-phone-time">受付時間9:30-20:00 (火・水 定休)</span></a><a href="#form" class="header-cta">見学予約はこちら</a></div></header>
 <section class="hero" id="top"><div class="hero-bg"><div class="hero-slide is-active" data-slide="0"><div class="slide-inner"><img src="img/top_slider_1.jpg" alt="電動シャッター付き2台並列ガレージのある外観"></div></div><div class="hero-slide" data-slide="1"><div class="slide-inner"><img src="img/top_slider_2.jpg" alt="木天井が映える私邸ガレージの内部"></div></div><div class="hero-slide" data-slide="2"><div class="slide-inner"><img src="img/top_slider_3.jpg" alt="緑を望む2階の大空間LDK"></div></div><div class="hero-overlay"></div></div><div class="hero-content"><div class="hero-band"><div class="hero-badge">モデルハウス完成見学会</div><h1 class="hero-catch">ガレージも暮らしも<br><em>欲しかった全て</em>が<br>この一邸に</h1><p class="hero-body">川崎市麻生区・王禅寺に誕生した、<br>電動シャッター付き<br class="sp-br">2台並列ガレージのある邸宅。<br>緑あふれる閑静な住宅街で、<br>趣味も、家族の時間も、<br>ゆとりをもって愉しめる住まいです。</p><div class="hero-specs"><div class="hero-spec"><div class="hero-spec-value">2<span class="hero-spec-unit">台</span></div><div class="hero-spec-label">並列駐車</div></div><div class="hero-spec"><div class="hero-spec-value">23.96<span class="hero-spec-unit">帖</span></div><div class="hero-spec-label">LDK</div></div><div class="hero-spec"><div class="hero-spec-value">56.63<span class="hero-spec-unit">坪</span></div><div class="hero-spec-label">土地面積</div></div></div></div><div class="hero-cta-wrap"><div class="cta-btn-wrap"><div class="cta-microcopy">※見学・ご相談すべて無料です</div><a href="#form" class="cta-btn cta-btn--large"><span class="cta-btn-main">完成見学会を予約する</span></a></div></div></div></section>
-<section class="openhouse-bar"><div class="container"><p class="openhouse-bar-sub">見学無料・期間限定・完全予約制</p><h2 class="openhouse-bar-title">現地完成見学会 開催</h2><div class="openhouse-meta"><div class="openhouse-meta-item"><svg class="openhouse-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>火曜・水曜を除く全ての曜日</div><div class="openhouse-meta-item"><svg class="openhouse-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>10:00 〜 18:00</div><div class="openhouse-meta-item" style="align-items:flex-start"><svg class="openhouse-meta-icon" style="margin-top:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span style="display:flex;flex-direction:column;gap:0px;align-items:flex-start"><span>川崎市麻生区王禅寺東3丁目51-18</span><span style="font-size:calc(1.125rem - 2px)">→小田急線「柿生」駅 徒歩25分</span></span></div></div><div class="openhouse-notes"><p style="margin-top:20px">※見学会は期間限定のため、<br><u>予告なく終了する場合があります</u></p><p>※ご希望の方はお早めにご予約ください</p></div></div></section><section class="features" id="features"><div class="container"><div style="text-align:center;margin-bottom:clamp(40px,6vw,64px)"><div class="section-label">Features</div><h2 class="section-title">上質な居住空間と<br>機能性が紡ぐ住まい</h2><p class="section-subtitle" style="margin:0 auto">「東の高野山」と称された名刹を地名の由来とし、日本最古の甘柿「禅寺丸柿」※発祥の地として知られる王禅寺。多摩丘陵の緑に抱かれた第一種低層住居専用地域の56.63坪に、電動シャッター付き2台並列ガレージと、緑を望む大空間リビングを実現しました。<br><span style="font-size:.8125rem;color:var(--text-muted)">※禅寺丸柿は日本最古の甘柿といわれ、「柿生」の地名の由来にも。その原木は国の登録記念物（2007年）に指定されています。</span></p></div><div class="feature-block fade-in"><div class="feature-visual"><div class="floorplan-grid"><div class="floorplan-thumb" data-img="parts/F1.png"><img src="parts/F1.png" alt="1F間取り"><span>1F</span></div><div class="floorplan-thumb" data-img="parts/F2.png"><img src="parts/F2.png" alt="2F間取り"><span>2F</span></div></div><p style="text-align:center;font-size:.875rem;color:var(--text-muted);margin-top:8px;">※クリックして拡大できます</p></div><div class="feature-content"><h3>ゆとりの敷地に<br>3LDK＋大型収納</h3><p>土地面積187.21㎡（56.63坪）のゆとりある敷地に、建物面積143.20㎡（車庫部分36.22㎡含む）を確保。1階は2台並列ガレージと2つの居室、2階は緑を望む大空間LDKを配置しました。シューズインクローク・ウォークインクローゼット・パントリーまで備えた、暮らしやすい3LDKです。</p><div class="feature-stats"><div class="feature-stat"><div class="feature-stat-value">187.21<span style="font-size:.5em">㎡</span></div><div class="feature-stat-label">土地面積</div><div class="feature-stat-note" style="color:#7a8a7a">56.63坪</div></div><div class="feature-stat"><div class="feature-stat-value">143.20<span style="font-size:.5em">㎡</span></div><div class="feature-stat-label">建物面積</div><div class="feature-stat-note" style="color:#7a8a7a">車庫部分36.22㎡含む</div></div></div></div></div><div class="feature-block fade-in"><div class="feature-visual"><div class="feature-img-placeholder"><img src="img/Features_1.jpg" alt="電動シャッター付き2台並列の私邸ガレージ" style="width:100%;height:100%;object-fit:cover"></div></div><div class="feature-content"><h3>電動シャッター付き<br>2台並列の私邸ガレージ</h3><p>36.22㎡のビルトインガレージは、愛車2台がゆったり並ぶ並列駐車に対応。電動シャッターが雨の日の乗り降りや大切な愛車を守り、防犯面でも安心です。ガレージ内にはコンセントを二箇所設置。趣味のギアを飾る収納やワークスペースとしても使えます。</p><div class="feature-stats"><div class="feature-stat"><div class="feature-stat-value">36.22<span style="font-size:.5em">㎡</span></div><div class="feature-stat-label">ガレージ面積</div></div><div class="feature-stat"><div class="feature-stat-value">2<span style="font-size:.5em">台</span></div><div class="feature-stat-label">並列駐車</div></div></div></div></div><div class="feature-block fade-in"><div class="feature-visual"><div class="feature-img-placeholder"><img src="img/Features_2.png" alt="緑を望む23.96帖の2階LDK" style="width:100%;height:100%;object-fit:cover"></div></div><div class="feature-content"><h3>緑を望む<br>23.96帖の2階リビング</h3><p>居室をあえて2階に配したことで、窓いっぱいに広がるのは周囲の建物に遮られない緑の眺望。明るい陽光と心地よい風が抜け、プライバシーも自然に守られます。23.96帖の大空間LDKには床暖房を標準装備し、冬も足元から暖か。2か所のバルコニーが、室内と外の心地よいつながりを生み出します。</p><div class="feature-stats"><div class="feature-stat"><div class="feature-stat-value">23.96<span style="font-size:.5em">帖</span></div><div class="feature-stat-label">LDK</div></div><div class="feature-stat"><div class="feature-stat-value">床暖房<span style="font-size:.5em"></span></div><div class="feature-stat-label">標準装備</div></div></div></div></div></div></section>
+<section class="openhouse-bar"><div class="container"><p class="openhouse-bar-sub">見学無料・期間限定・完全予約制</p><h2 class="openhouse-bar-title">現地完成見学会 開催</h2><div class="openhouse-meta"><div class="openhouse-meta-item"><svg class="openhouse-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>火曜・水曜を除く全ての曜日</div><div class="openhouse-meta-item"><svg class="openhouse-meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>10:00 〜 18:00</div><div class="openhouse-meta-item" style="align-items:flex-start"><svg class="openhouse-meta-icon" style="margin-top:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span style="display:flex;flex-direction:column;gap:0px;align-items:flex-start"><span>川崎市麻生区王禅寺東3丁目51-18</span><span style="font-size:calc(1.125rem - 2px)">→小田急線「柿生」駅 徒歩25分</span></span></div></div><div class="openhouse-notes"><p style="margin-top:20px">※見学会は期間限定のため、<br><u>予告なく終了する場合があります</u></p><p>※ご希望の方はお早めにご予約ください</p></div></div></section><section class="features" id="features"><div class="container"><div style="text-align:center;margin-bottom:clamp(40px,6vw,64px)"><div class="section-label">Features</div><h2 class="section-title">上質な居住空間と<br>機能性が紡ぐ住まい</h2><p class="section-subtitle" style="margin:0 auto">「東の高野山」と称された歴史あるお寺を地名の由来とし、日本最古の甘柿「禅寺丸柿」発祥の地として知られる王禅寺。多摩丘陵の緑に抱かれた第一種低層住居専用地域の56.63坪に、電動シャッター付き2台並列ガレージと、緑を望む大空間リビングを実現しました。<br><span style="font-size:.8125rem;color:var(--text-muted)">※禅寺丸柿は日本最古の甘柿といわれ、「柿生」の地名の由来にも。その原木は国の登録記念物（2007年）に指定されています。</span></p></div><div class="feature-block fade-in"><div class="feature-visual"><div class="floorplan-grid"><div class="floorplan-thumb" data-img="parts/F1.png"><img src="parts/F1.png" alt="1F間取り"><span>1F</span></div><div class="floorplan-thumb" data-img="parts/F2.png"><img src="parts/F2.png" alt="2F間取り"><span>2F</span></div></div><p style="text-align:center;font-size:.875rem;color:var(--text-muted);margin-top:8px;">※クリックして拡大できます</p></div><div class="feature-content"><h3>ゆとりの敷地に<br>3LDK＋大型収納</h3><p>土地面積187.21㎡（56.63坪）のゆとりある敷地に、建物面積143.20㎡（車庫部分36.22㎡含む）を確保。1階は2台並列ガレージと2つの居室、2階は緑を望む大空間LDKを配置しました。シューズインクローク・ウォークインクローゼット・パントリーまで備えた、暮らしやすい3LDKです。</p><div class="feature-stats"><div class="feature-stat"><div class="feature-stat-value">187.21<span style="font-size:.5em">㎡</span></div><div class="feature-stat-label">土地面積</div><div class="feature-stat-note" style="color:#7a8a7a">56.63坪</div></div><div class="feature-stat"><div class="feature-stat-value">143.20<span style="font-size:.5em">㎡</span></div><div class="feature-stat-label">建物面積</div><div class="feature-stat-note" style="color:#7a8a7a">車庫部分36.22㎡含む</div></div></div></div></div><div class="feature-block fade-in"><div class="feature-visual"><div class="feature-img-placeholder"><img src="img/Features_1.jpg" alt="電動シャッター付き2台並列の私邸ガレージ" style="width:100%;height:100%;object-fit:cover"></div></div><div class="feature-content"><h3>電動シャッター付き<br>2台並列の私邸ガレージ</h3><p>36.22㎡のビルトインガレージは、愛車2台がゆったり並ぶ並列駐車に対応。電動シャッターが雨の日の乗り降りや大切な愛車を守り、防犯面でも安心です。ガレージ内にはコンセントを二箇所設置。趣味のギアを飾る収納やワークスペースとしても使えます。</p><div class="feature-stats"><div class="feature-stat"><div class="feature-stat-value">36.22<span style="font-size:.5em">㎡</span></div><div class="feature-stat-label">ガレージ面積</div></div><div class="feature-stat"><div class="feature-stat-value">2<span style="font-size:.5em">台</span></div><div class="feature-stat-label">並列駐車</div></div></div></div></div><div class="feature-block fade-in"><div class="feature-visual"><div class="feature-img-placeholder"><img src="img/Features_2.png" alt="緑を望む23.96帖の2階LDK" style="width:100%;height:100%;object-fit:cover"></div></div><div class="feature-content"><h3>緑を望む<br>23.96帖の2階リビング</h3><p>居室をあえて2階に配したことで、窓いっぱいに広がるのは周囲の建物に遮られない緑の眺望。明るい陽光と心地よい風が抜け、プライバシーも自然に守られます。23.96帖の大空間LDKには床暖房を標準装備し、冬も足元から暖か。2か所のバルコニーが、室内と外の心地よいつながりを生み出します。</p><div class="feature-stats"><div class="feature-stat"><div class="feature-stat-value">23.96<span style="font-size:.5em">帖</span></div><div class="feature-stat-label">LDK</div></div><div class="feature-stat"><div class="feature-stat-value">床暖房<span style="font-size:.5em"></span></div><div class="feature-stat-label">標準装備</div></div></div></div></div></div></section>
 <section class="reasons" id="reasons"><div class="container"><div class="reasons-header"><div class="section-label">Reasons</div><h2 class="section-title">この広さが実現できる<br class="sp-br">6つの理由</h2><p class="section-subtitle">限られた土地から最大限の空間を引き出す、プリンシパルホーム独自の設計思想。</p></div><div class="reason-item fade-in"><div class="reason-content"><h3>数値以上のゆとりを生む「体積設計」</h3><p>土地の「㎡」という平面の数字に縛られず、縦の空間（高さ・体積）を使い切る設計でデッドスペースを徹底排除。数値以上の圧倒的な開放感をデザインします。</p><img src="img/Reasons-1.jpg" alt="体積設計" style="width:100%;margin-top:12px;border-radius:8px;object-fit:cover"></div></div><div class="reason-item fade-in"><div class="reason-content"><h3>東京・神奈川エリアで22年以上<br>累計2,000棟を超える実績</h3><p>地域に根ざした家づくりを続け、数多くのご家族の夢を形にしてきました。</p><img src="img/Reasons-2.jpg" alt="東京・神奈川エリアで22年以上" style="width:100%;margin-top:12px;border-radius:8px;object-fit:cover"></div></div><div class="reason-item fade-in"><div class="reason-content"><h3>世界が認めるデザイン力</h3><p>グッドデザイン賞（2024年）/キッズデザイン賞（2024年）/ジャーマンデザインアワード（2025年）/など、国内外の権威あるデザイン賞を多数受賞しています。</p><img src="img/Reasons-3.jpg" alt="世界が認めるデザイン力" style="width:100%;margin-top:12px;border-radius:8px;object-fit:cover"></div></div><div class="reason-item fade-in"><div class="reason-content"><h3>床暖房＋オープンキッチンで<br>広さと快適な生活を両立</h3><p>23.96帖の大空間LDKには床暖房を標準装備。足元からやわらかく部屋全体を暖め、空気が乾燥しにくくお子様にもやさしい暖かさです。リビングと一体になった対面のオープンキッチンが、家族の気配を感じながら料理を愉しめる開放的な空間を実現。広さと心地よさを両立した、上質な毎日が叶います。</p><img src="img/Reasons_4.jpg" alt="床暖房とオープンキッチンの大空間LDK" style="width:100%;margin-top:12px;border-radius:8px;object-fit:cover"></div></div><div class="reason-item fade-in"><div class="reason-content"><h3>洗濯ストレスをゼロにする家事動線</h3><p>洗面所と洗濯機が、バルコニーと同じフロアに配置。洗ったらそのまま数歩でバルコニーへ干せるため、重い洗濯物を持って階段を上り下りする必要がありません。洗う・干すがワンフロアでスムーズに完結し、毎日の家事の負担をぐっと軽くします。</p><img src="img/Reasons_5.jpg" alt="洗濯機から直接バルコニーへ行ける家事動線" style="width:100%;margin-top:12px;border-radius:8px;object-fit:cover"></div></div><div class="reason-item fade-in"><div class="reason-content"><h3>多彩な趣味を支える1階のゆとり</h3><p>1階には、愛車2台がゆったり並ぶ36.22㎡の電動シャッター付きビルトインガレージを確保。雨の日も濡れずに乗り降りでき、防犯面でも安心です。さらに玄関まわりには大型のシューズインクローク（SIC）を備え、ベビーカーやアウトドアギアもたっぷり収納。趣味とゆとりを両立する1階空間です。</p><img src="img/Reasons_6.jpg" alt="電動シャッター付き2台並列ガレージ" style="width:100%;margin-top:12px;border-radius:8px;object-fit:cover"></div></div></div></section>
 <section class="dream-day" id="lifestyle"><div class="container"><div class="dream-header"><p class="dream-microcopy">「ただ住むための家」ではなく<br class="sp-br-610">「上質な毎日を愉しむ住まい」へ</p><h2 class="section-title">この住まいが叶える<br>憧れの休日プラン</h2><p class="section-subtitle" style="margin-top:16px">緑を望む大空間リビングと、電動シャッター付き2台並列ガレージ。ゆとりある住まいが、心地よい一日を叶えます。</p></div><div class="timeline"><div class="timeline-bg-line"></div><div class="timeline-track"></div><div class="timeline-item fade-in"><div class="timeline-node"><div class="timeline-circle"></div></div><div class="timeline-body"><div class="timeline-time">08:00</div><div class="timeline-card"><h4>緑を望む2階LDKで<br>家族そろって朝ごはん</h4><p>大きな窓いっぱいに広がる緑と共に、笑顔あふれる楽しい朝食を。床暖房完備の暖かなLDKに家族の笑い声が響く、心地よい休日の始まりです。</p><img src="img/plan1.jpg" alt="緑を望む2階LDKで家族そろって朝食"></div></div></div><div class="timeline-item fade-in"><div class="timeline-node"><div class="timeline-circle"></div></div><div class="timeline-body"><div class="timeline-time">13:00</div><div class="timeline-card"><h4>愛車に乗って<br>家族で買い物を楽しむ</h4><p>電動シャッターを上げて、2台並列ガレージから颯爽とお出かけ。新百合ヶ丘の商業施設で、買い物を楽しむ。車中心の暮らしだからこそ、家族みんなで気軽にお出かけができます。</p><img src="img/plan2.jpg" alt="愛車で家族でお買い物へ"></div></div></div><div class="timeline-item fade-in"><div class="timeline-node"><div class="timeline-circle"></div></div><div class="timeline-body"><div class="timeline-time">21:00</div><div class="timeline-card"><h4>見晴らしの良い<br class="sp-br">高台の家で<br>流れ星を眺める夜</h4><p>一日の終わりは、多摩丘陵の高台に佇むわが家から夜空を見上げて。街明かりの向こうに、ふと流れる星。緑深い王禅寺の静けさに包まれて過ごす、家族の特別な夜のひとときです。</p><img src="img/plan3.jpg" alt="高台の家から流れ星を眺める夜"></div></div></div></div></div></section>
 <section class="cta-section" id="reserve">
@@ -371,7 +376,7 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
 </div>
 </div>
 </section>
-<section class="details" id="details"><div class="container"><div class="section-label" style="text-align:center">Details</div><h2 class="section-title" style="text-align:center">完成見学会｜詳細情報</h2><div class="details-grid"><div class="details-map"><iframe class="map-pc" src="https://maps.google.com/maps?q=%E5%B7%9D%E5%B4%8E%E5%B8%82%E9%BA%BB%E7%94%9F%E5%8C%BA%E7%8E%8B%E7%A6%85%E5%AF%BA%E6%9D%B1%EF%BC%93%E4%B8%81%E7%9B%AE51-18&z=16&output=embed" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><iframe class="map-sp" src="https://maps.google.com/maps?q=%E5%B7%9D%E5%B4%8E%E5%B8%82%E9%BA%BB%E7%94%9F%E5%8C%BA%E7%8E%8B%E7%A6%85%E5%AF%BA%E6%9D%B1%EF%BC%93%E4%B8%81%E7%9B%AE51-18&z=16&output=embed" width="400" height="300" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="details-table"><dl><dt>開催時間</dt><dd>10:00 〜 18:00</dd><dt>見学可能日<span class="dt-resp-kakko">(完全予約制)</span></dt><dd>火曜・水曜を除く全ての曜日<br><small>※見学会は期間限定のため<u>予告なく終了する場合があります</u><br>※ご希望の方はお早めにご予約ください</small></dd><dt class="dt-before-map">住所</dt><dd class="dd-before-map">川崎市麻生区王禅寺東3丁目51-18</dd><div class="details-map-inline"><iframe src="https://maps.google.com/maps?q=%E5%B7%9D%E5%B4%8E%E5%B8%82%E9%BA%BB%E7%94%9F%E5%8C%BA%E7%8E%8B%E7%A6%85%E5%AF%BA%E6%9D%B1%EF%BC%93%E4%B8%81%E7%9B%AE51-18&z=16&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><dt>交通アクセス</dt><dd>小田急線「柿生」駅 徒歩25分／「新百合ヶ丘」駅 バス19分「王禅寺中央中学校前」停 徒歩4分<br><small>※最寄り駅でのお待ち合わせ等につきましてもご相談下さい<br>※メールフォームからのご予約の確認ができ次第、担当者より詳細なご連絡を致します</small></dd><dt>駐車場</dt><dd>有り（電動シャッター付き2台並列ビルトインガレージ）</dd><dt>来場・相談費用</dt><dd>完全無料</dd><dt>土地探し相談</dt><dd>可能<br><small>※ご予約時にご希望をお聞かせ頂ければ未公開土地情報の提供も可能です</small></dd><dt>間取り</dt><dd>3LDK＋SIC＋WIC＋パントリー</dd><dt>土地面積</dt><dd>187.21㎡（約56.63坪）</dd><dt>建物面積</dt><dd>143.20㎡（約43.3坪）<br><small>※車庫部分36.22㎡含む</small></dd><dt>用途地域</dt><dd>第一種低層住居専用地域</dd><dt>建ぺい率<span class="dt-resp-kakko">／容積率</span></dt><dd>40％／80％</dd><dt>構造・工法</dt><dd>木造2階建て・木造軸組工法</dd><dt>建築確認番号</dt><dd>第25KAK建確01624号</dd><dt>接道</dt><dd>北側 約4.0m公道</dd><dt>設備</dt><dd>公営水道・本下水・東京電力・都市ガス</dd><dt>引渡・現況</dt><dd>引渡：相談／2026年4月末完成予定</dd><dt>周辺施設</dt><dd><small>ゆりストアクリエイトSD川崎王禅寺店 約420m／クリエイトエス・ディー川崎王禅寺店 約420m／王禅寺しらゆり保育園 約530m／化粧面谷公園 約210m／セブンイレブン川崎王禅寺東4丁目店 約610m／川崎東柿生郵便局 約600m</small></dd><dt>備考</dt><dd>電動シャッター付き2台並列ガレージ、緑を望む2階LDK（床暖房）、シューズインクローク、ウォークインクローゼット、パントリーなど。デザイン・質感をさまざまな角度からじっくりとご覧いただけます。</dd></dl></div></div></div></section>
+<section class="details" id="details"><div class="container"><div class="section-label" style="text-align:center">Details</div><h2 class="section-title" style="text-align:center">完成見学会｜詳細情報</h2><div class="details-grid"><div class="details-map"><iframe class="map-pc" src="https://maps.google.com/maps?q=%E5%B7%9D%E5%B4%8E%E5%B8%82%E9%BA%BB%E7%94%9F%E5%8C%BA%E7%8E%8B%E7%A6%85%E5%AF%BA%E6%9D%B1%EF%BC%93%E4%B8%81%E7%9B%AE51-18&z=16&output=embed" width="600" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><iframe class="map-sp" src="https://maps.google.com/maps?q=%E5%B7%9D%E5%B4%8E%E5%B8%82%E9%BA%BB%E7%94%9F%E5%8C%BA%E7%8E%8B%E7%A6%85%E5%AF%BA%E6%9D%B1%EF%BC%93%E4%B8%81%E7%9B%AE51-18&z=16&output=embed" width="400" height="300" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><div class="details-table"><dl><dt>開催時間</dt><dd>10:00 〜 18:00</dd><dt>見学可能日<span class="dt-resp-kakko">(完全予約制)</span></dt><dd>火曜・水曜を除く全ての曜日<br><small>※見学会は期間限定のため<u>予告なく終了する場合があります</u><br>※ご希望の方はお早めにご予約ください</small></dd><dt class="dt-before-map">住所</dt><dd class="dd-before-map">川崎市麻生区王禅寺東3丁目51-18</dd><div class="details-map-inline"><iframe src="https://maps.google.com/maps?q=%E5%B7%9D%E5%B4%8E%E5%B8%82%E9%BA%BB%E7%94%9F%E5%8C%BA%E7%8E%8B%E7%A6%85%E5%AF%BA%E6%9D%B1%EF%BC%93%E4%B8%81%E7%9B%AE51-18&z=16&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div><dt>交通アクセス</dt><dd>小田急線「柿生」駅 徒歩25分／「新百合ヶ丘」駅 バス19分「王禅寺中央中学校前」停 徒歩4分<br><small>※最寄り駅でのお待ち合わせ等につきましてもご相談下さい<br>※メールフォームからのご予約の確認ができ次第、担当者より詳細なご連絡を致します</small></dd><dt>駐車場</dt><dd>有り</dd><dt>来場・相談費用</dt><dd>完全無料</dd><dt>土地探し相談</dt><dd>可能<br><small>※ご予約時にご希望をお聞かせ頂ければ未公開土地情報の提供も可能です</small></dd><dt>間取り</dt><dd>ビルトインガレージ＋3LDK＋SIC＋WIC</dd><dt>土地面積</dt><dd>187.21㎡（約56.63坪）</dd><dt>建物面積</dt><dd>143.20㎡（約43.3坪）<br><small>※車庫部分36.22㎡含む</small></dd><dt>建ぺい率<span class="dt-resp-kakko">／容積率</span></dt><dd>40％／80％</dd><dt>構造・工法</dt><dd>木造2階建て・木造軸組工法</dd><dt>周辺施設</dt><dd><small>ゆりストアクリエイトSD川崎王禅寺店 約420m／クリエイトエス・ディー川崎王禅寺店 約420m／王禅寺しらゆり保育園 約530m／化粧面谷公園 約210m／セブンイレブン川崎王禅寺東4丁目店 約610m／川崎東柿生郵便局 約600m</small></dd><dt>備考</dt><dd>電動シャッター付き2台並列ガレージ、緑を望む2階LDK（床暖房）、シューズインクローク、ウォークインクローゼット、パントリーなど。デザイン・質感をさまざまな角度からじっくりとご覧いただけます。</dd></dl></div></div></div></section>
 <section class="steps" id="steps"><div class="container"><div class="steps-header"><div class="section-label">Flow</div><h2 class="section-title">予約から見学までの流れ</h2><p class="section-subtitle">＼初めての方でも安心／<br><span style="font-weight:600">ご予約から当日までのシンプルな3ステップ</span></p></div><div class="steps-grid"><div class="step-card fade-in"><div class="step-number">01</div><h3>WEBから予約申込み</h3><img src="img/gengaku1.jpg" alt="WEBから予約申込み" class="step-img"><p>本ページの「見学予約ボタン」から、ご希望の日時を選択して送信してください。24時間いつでも受け付けております。</p></div><div class="step-card fade-in"><div class="step-number">02</div><h3>スタッフより確認のご連絡</h3><img src="img/gengaku2.jpg" alt="スタッフより確認のご連絡" class="step-img"><p>お申込み内容を確認後、3営業日以内に担当スタッフよりお電話またはメールにてご連絡を差し上げます。この際、当日の詳細な集合場所や、お車でお越しの方には駐車スペースのご案内も併せて行います。これにて予約完了です！<br><small style="font-size:14px">※火曜・水曜は定休日となります</small></p></div><div class="step-card fade-in"><div class="step-number">03</div><h3>現地にて見学</h3><img src="img/gengaku3.jpg" alt="現地にて見学" class="step-img"><p>所要時間：約60〜90分<br>当日は現地（川崎市麻生区王禅寺東）へ直接お越しください。スタッフが同行し物件をご案内します。疑問点や家づくりのご相談など、お気軽にお話しください。</p></div></div><div style="text-align:center;margin-top:clamp(40px,5vw,56px)"><a href="#form" class="cta-btn">見学会を予約する</a></div></div></section>
 <section class="faq" id="faq"><div class="container"><div class="faq-header"><div class="section-label">FAQ</div><h2 class="section-title">よくあるご質問</h2><p class="section-subtitle">「気になるけれど、まだ予約は早いかな？」と迷われている方へ。<br>皆様からよく頂くご質問にお答えします。</p></div><div class="faq-list"><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>見学会に参加するのに費用はかかりますか？</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">いいえ、見学・ご相談はすべて無料です。現地でのご案内はもちろん、家づくりのご相談についても一切費用はかかりません。「まずは実物を見てみたい」という気軽な気持ちで、安心してお越しください。</div></div></div><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>予約なしで当日行っても見られますか？</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">本見学会は完全予約制となっております。プロのスタッフが丁寧にご案内できるよう、枠数を絞って開催しております。事前のご予約をお願いいたします。</div></div></div><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>見学会の予約はいつまでにすればよいですか？</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">前日まで、WEBサイトより受け付けております。枠が埋まり次第終了となりますので、特に連休中のご見学をご希望の場合は、お早めの確保をおすすめいたします。<br>※当日の場合は、<a href="tel:0120021541" style="text-decoration:underline;color:inherit">0120-021-541</a>までご連絡くださいませ。</div></div></div><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>見学にはどれくらい時間がかかりますか？</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">おおよそ60分〜90分ほどです。「サッと見たい」「設備について詳しく聞きたい」など、お客様のご都合に合わせて調整可能ですので、当日スタッフにお気軽にお申し付けください。</div></div></div><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>子供と一緒に見学しても大丈夫ですか？</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">もちろんです！ぜひご家族でお越しください。スタッフもしっかりサポートいたしますので、安心してお連れください。</div></div></div><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>最寄り駅から少し歩きますが、アクセスはどうですか？</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">小田急線「柿生」駅のほか、「新百合ヶ丘」駅からのバス便（「王禅寺中央中学校前」停 徒歩4分）もご利用いただけます。本物件は電動シャッター付き2台並列ガレージを備えているため、お車中心の暮らしにも最適です。新百合ヶ丘エリアは買い物・教育環境も充実しています。当日は最寄り駅からのお迎え等もご相談いただけますので、お気軽にお申し付けください。</div></div></div><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>まだ検討し始めたばかりですが、見学だけでも良いですか？</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">もちろんです！大歓迎でございます。具体的なプランがなくても、インスピレーションを膨らませる場としてご活用ください。</div></div></div><div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('is-open')"><span class="faq-q-mark">Q.</span><span>営業がしつこくないか心配です…</span><span class="faq-toggle"></span></button><div class="faq-answer"><div class="faq-answer-inner">ご安心ください。強引な勧誘やしつこいお電話は一切いたしません。あくまでお客様のペースで、楽しみながらご覧いただくことを大切にしています。</div></div></div></div></div>
 <div style="text-align:center;margin-top:40px">
@@ -422,12 +427,12 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
   </div>
   <div class="form-row">
     <div class="form-group">
-      <label class="form-label" for="f-date2">第二希望日 <span class="form-optional">任意</span></label>
-      <input type="date" id="f-date2" name="date2" class="form-input">
+      <label class="form-label" for="f-date2">第二希望日 <span class="form-required">必須</span></label>
+      <input type="date" id="f-date2" name="date2" class="form-input" required>
     </div>
     <div class="form-group">
-      <label class="form-label" for="f-time2">第二希望時間 <span class="form-optional">任意</span></label>
-      <select id="f-time2" name="time2" class="form-select">
+      <label class="form-label" for="f-time2">第二希望時間 <span class="form-required">必須</span></label>
+      <select id="f-time2" name="time2" class="form-select" required>
         <option value="" disabled selected>時間を選択</option>
         <option value="10:00">10:00</option>
         <option value="11:00">11:00</option>
@@ -441,18 +446,27 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
     </div>
   </div>
 
+  <div class="form-notice" style="margin-top:4px">
+    <p>※翌日以降の日付をご指定ください<br>※当日のご予約は、お電話にてお申込み下さい<br><a href="tel:0120021541" style="font-weight:700;color:var(--accent-primary)">0120-021-541</a></p>
+    <p style="font-weight:600;color:#006036">※毎週火・水曜日定休</p>
+  </div>
+
   <hr class="form-divider">
 
   <!-- お名前・フリガナ -->
   <div class="form-row">
     <div class="form-group">
-      <label class="form-label" for="f-name">お名前 <span class="form-required">必須</span></label>
-      <input type="text" id="f-name" name="name" class="form-input" placeholder="例：山田 太郎" autocomplete="name" required>
+      <label class="form-label" for="f-lastname">姓 <span class="form-required">必須</span></label>
+      <input type="text" id="f-lastname" name="lastname" class="form-input" placeholder="例：家好" autocomplete="family-name" required>
     </div>
     <div class="form-group">
-      <label class="form-label" for="f-furigana">フリガナ <span class="form-optional">任意</span></label>
-      <input type="text" id="f-furigana" name="furigana" class="form-input" placeholder="例：ヤマダ タロウ">
+      <label class="form-label" for="f-firstname">名 <span class="form-required">必須</span></label>
+      <input type="text" id="f-firstname" name="firstname" class="form-input" placeholder="例：太郎" autocomplete="given-name" required>
     </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label" for="f-furigana">ふりがな <span class="form-optional">任意</span></label>
+    <input type="text" id="f-furigana" name="furigana" class="form-input" placeholder="例：いえすき たろう">
   </div>
 
   <!-- 電話番号 -->
@@ -476,13 +490,11 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
   <!-- その他 -->
   <div class="form-group">
     <label class="form-label" for="f-msg">その他のご質問・ご要望 <span class="form-optional">任意</span></label>
-    <textarea id="f-msg" name="message" class="form-textarea" placeholder="ご不明な点やご要望があればお気軽にどうぞ。（例：お車でのアクセス確認、ガレージへの試し入れを希望、など）" rows="5"></textarea>
+    <textarea id="f-msg" name="message" class="form-textarea" placeholder="ご不明な点やご要望があればお気軽にどうぞ。（例：お車でのアクセス確認、など）" rows="5"></textarea>
   </div>
 
   <!-- 注意事項 -->
   <div class="form-notice">
-    <p>※<strong>翌日以降の日付</strong>をご指定ください。当日のご予約はお電話（<a href="tel:0120021541">0120-021-541</a>）にてご対応いたします。</p>
-    <p>※<strong>火曜・水曜は定休日</strong>です。ご予約いただいた場合は前後の日程をご提案させていただきます。</p>
     <p>※ご予約確認後、3営業日以内に担当スタッフよりお電話またはメールにてご連絡いたします。</p>
   </div>
 
@@ -496,9 +508,8 @@ small{font-size:13.5px}.step-card small{color:var(--text-muted)}.step-img{width:
 
   <!-- 送信ボタン -->
   <div class="form-submit-wrap">
-    <button type="submit" class="cta-btn cta-btn--large" style="min-width:280px">
-      <span class="cta-btn-main">送信する</span>
-      <span class="cta-btn-sub">担当者より3営業日以内にご連絡いたします</span>
+    <button type="submit" id="f-submit" class="cta-btn cta-btn--large" style="min-width:280px">
+      <span class="cta-btn-main">確認画面へ進む</span>
     </button>
     <p class="form-submit-note">※見学・ご相談はすべて無料です</p>
   </div>
@@ -661,8 +672,58 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
   if(d1) d1.min = minDate;
   if(d2) d2.min = minDate;
 
+  // 火曜(2)・水曜(3)は選択不可
+  function isClosedDay(dateStr){
+    if(!dateStr) return false;
+    var d = new Date(dateStr + 'T12:00:00');
+    return d.getDay() === 2 || d.getDay() === 3;
+  }
+  [d1, d2].forEach(function(inp){
+    if(!inp) return;
+    inp.addEventListener('change', function(){
+      if(isClosedDay(inp.value)){
+        alert('火曜・水曜は定休日のためご予約いただけません。別の日付をお選びください。');
+        inp.value = '';
+        updateBtn();
+      }
+    });
+  });
+
+  // ボタン活性化チェック
+  var submitBtn = document.getElementById('f-submit');
+  var requiredIds = ['f-date1','f-time1','f-date2','f-time2','f-lastname','f-firstname','f-tel','f-email','f-email2'];
+  var agreeChk = document.getElementById('f-agree');
+
+  function updateBtn(){
+    var filled = requiredIds.every(function(id){
+      var el = document.getElementById(id);
+      return el && el.value.trim() !== '';
+    });
+    var agreed = agreeChk && agreeChk.checked;
+    if(filled && agreed){
+      submitBtn.classList.add('is-ready');
+    } else {
+      submitBtn.classList.remove('is-ready');
+    }
+  }
+
+  requiredIds.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el){ el.addEventListener('input', updateBtn); el.addEventListener('change', updateBtn); }
+  });
+  if(agreeChk) agreeChk.addEventListener('change', updateBtn);
+  updateBtn();
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
+
+    // 火曜・水曜チェック
+    if(isClosedDay(d1 && d1.value)){
+      alert('第一希望日が定休日（火・水）です。別の日付をお選びください。');
+      if(d1) d1.value = '';
+      updateBtn();
+      return;
+    }
 
     // メールアドレス一致チェック
     var email = document.getElementById('f-email').value.trim();
@@ -679,11 +740,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click'
       return;
     }
 
-    // 送信後の遷移（既存の予約フォームへ）
-    var params = new URLSearchParams();
-    new FormData(form).forEach(function(v,k){ if(v) params.append(k,v); });
-    params.set('from','instagram_lp03');
-    window.location.href = 'https://pr-h.net/kengaku01/?' + params.toString();
+    // フォームデータをsessionStorageに保存して確認画面へ
+    var data = {};
+    new FormData(form).forEach(function(v,k){ if(v) data[k]=v; });
+    sessionStorage.setItem('reserveData', JSON.stringify(data));
+    window.location.href = 'confirm.html';
   });
 })();
 </script>

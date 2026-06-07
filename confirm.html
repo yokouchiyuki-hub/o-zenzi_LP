@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>入力内容の確認｜王禅寺東 モデルハウス完成見学会｜Principal Home</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+:root{
+  --bg-page:#f2f6f4;
+  --bg-surface:#FFFFFF;
+  --bg-dark:#1E2A1E;
+  --text-heading:#2D3A2D;
+  --text-body:#4A5A4A;
+  --text-muted:#7A8A7A;
+  --text-on-dark:#F0F2EE;
+  --accent-primary:#006036;
+  --accent-primary-hover:#004525;
+  --accent-warm:#e1b90c;
+  --border-default:#C8D2CC;
+  --border-light:#DCE5E0;
+  --radius-sm:8px;
+  --radius-md:16px;
+  --shadow-md:0 4px 24px rgba(30,42,30,.10);
+  --font-body:'Noto Sans JP',sans-serif;
+  --font-display:'DM Serif Display','Noto Serif JP',serif;
+  --ease-out:cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-body);background:var(--bg-page);color:var(--text-body);line-height:1.8;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-primary)}
+img{max-width:100%;display:block}
+
+/* ヘッダー */
+.header{position:sticky;top:0;z-index:30;padding:0 clamp(16px,4vw,40px);height:64px;display:flex;align-items:center;background:rgba(242,246,244,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(0,96,54,.12)}
+.header-logo img{max-height:19px;width:auto;display:block}
+
+/* メインコンテンツ */
+.confirm-section{padding:clamp(48px,8vw,96px) 0}
+.container{max-width:900px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+
+/* 見出し */
+.section-label{font-family:var(--font-display);font-size:.9375rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent-primary);margin-bottom:12px;font-weight:700;text-align:center}
+.section-title{font-family:var(--font-display);font-size:clamp(1.5rem,3vw,2.25rem);font-weight:400;color:var(--text-heading);line-height:1.35;text-align:center;margin-bottom:12px}
+.section-subtitle{color:var(--text-muted);font-size:.9375rem;line-height:1.9;text-align:center;margin-bottom:40px}
+
+/* 確認テーブル */
+.confirm-card{background:var(--bg-surface);border-radius:var(--radius-md);border:1px solid var(--border-light);box-shadow:var(--shadow-md);overflow:hidden;max-width:680px;margin:0 auto}
+.confirm-table{width:100%;border-collapse:collapse}
+.confirm-table tr{border-bottom:1px solid var(--border-light)}
+.confirm-table tr:last-child{border-bottom:none}
+.confirm-table th{width:36%;padding:16px 20px;font-size:.875rem;font-weight:700;color:var(--text-muted);background:var(--bg-page);text-align:left;vertical-align:top}
+.confirm-table td{padding:16px 20px;font-size:.9375rem;color:var(--text-heading);font-weight:500;word-break:break-all}
+.confirm-table .empty-val{color:var(--text-muted);font-size:.875rem;font-weight:400}
+
+/* ボタン群 */
+.confirm-actions{display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:36px}
+.cta-btn{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:16px 40px;border-radius:var(--radius-sm);font-family:var(--font-body);font-weight:700;font-size:1rem;letter-spacing:.04em;cursor:pointer;text-decoration:none;border:none;transition:background .2s,transform .15s;min-width:280px;text-align:center}
+.cta-btn--submit{background:var(--accent-primary);color:#fff}
+.cta-btn--submit:hover{background:var(--accent-primary-hover)}
+.cta-btn--back{background:transparent;color:var(--text-muted);border:1.5px solid var(--border-default);font-size:.9375rem;padding:12px 32px;min-width:200px}
+.cta-btn--back:hover{background:var(--bg-page)}
+.confirm-note{font-size:.875rem;color:var(--text-muted);text-align:center}
+
+/* フッター */
+.footer{padding:32px 0;text-align:center;border-top:1px solid var(--border-light);background:var(--bg-dark);color:var(--text-on-dark)}
+.footer p{font-size:.8125rem;opacity:.6;margin-top:12px}
+
+@media(max-width:640px){
+  .confirm-table th{width:40%;padding:12px 14px;font-size:.8125rem}
+  .confirm-table td{padding:12px 14px;font-size:.875rem}
+  .cta-btn{min-width:unset;width:100%}
+  .cta-btn--back{width:auto;min-width:160px}
+}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+  <a href="index.html" class="header-logo">
+    <img src="parts/logo.png" alt="Principal Home" style="max-height:19px">
+  </a>
+</header>
+
+<section class="confirm-section">
+  <div class="container">
+    <div class="section-label">Confirm</div>
+    <h1 class="section-title">入力内容の確認</h1>
+    <p class="section-subtitle">以下の内容でご予約を申し込みます。<br>内容をご確認の上、「予約を申し込む」ボタンを押してください。</p>
+
+    <div class="confirm-card">
+      <table class="confirm-table" id="confirmTable">
+        <!-- JSで動的生成 -->
+      </table>
+    </div>
+
+    <div class="confirm-actions">
+      <button class="cta-btn cta-btn--submit" id="submitBtn">予約を申し込む</button>
+      <button class="cta-btn cta-btn--back" id="backBtn">← 入力画面に戻る</button>
+      <p class="confirm-note">※見学・ご相談はすべて無料です</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <img src="parts/logo.png" alt="Principal Home" style="height:17px;opacity:0.6;filter:brightness(0) invert(1);margin:0 auto">
+    <p>&copy; Principal Home Inc. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var raw = sessionStorage.getItem('reserveData');
+  if(!raw){
+    // データがなければフォームへ戻す
+    window.location.href = 'index.html#form';
+    return;
+  }
+  var data = JSON.parse(raw);
+
+  // 表示ラベル定義（表示順）
+  var fields = [
+    {key:'event',    label:'ご予約イベント'},
+    {key:'date1',    label:'第一希望日'},
+    {key:'time1',    label:'第一希望時間'},
+    {key:'date2',    label:'第二希望日',    optional:true},
+    {key:'time2',    label:'第二希望時間',  optional:true},
+    {key:'lastname', label:'姓'},
+    {key:'firstname',label:'名'},
+    {key:'furigana', label:'ふりがな',      optional:true},
+    {key:'tel',      label:'電話番号'},
+    {key:'email',    label:'メールアドレス'},
+    {key:'message',  label:'ご質問・ご要望',optional:true},
+  ];
+
+  var tbody = document.getElementById('confirmTable');
+  var html = '';
+  fields.forEach(function(f){
+    var val = data[f.key] || '';
+    if(!val && f.optional) return; // 任意で空なら表示しない
+    var displayVal = val
+      ? '<span>' + escHtml(val) + '</span>'
+      : '<span class="empty-val">未入力</span>';
+    html += '<tr><th>' + escHtml(f.label) + '</th><td>' + displayVal + '</td></tr>';
+  });
+  tbody.innerHTML = html;
+
+  // 戻るボタン
+  document.getElementById('backBtn').addEventListener('click', function(){
+    window.location.href = 'index.html#form';
+  });
+
+  // 送信ボタン：hidden formをPOSTしてreserve-thanksへ
+  document.getElementById('submitBtn').addEventListener('click', function(){
+    var tempForm = document.createElement('form');
+    tempForm.method = 'POST';
+    tempForm.action = 'https://pr-h.net/reserve-thanks/';
+    Object.keys(data).forEach(function(k){
+      if(data[k]){
+        var inp = document.createElement('input');
+        inp.type = 'hidden';
+        inp.name = k;
+        inp.value = data[k];
+        tempForm.appendChild(inp);
+      }
+    });
+    var fromInp = document.createElement('input');
+    fromInp.type = 'hidden';
+    fromInp.name = 'from';
+    fromInp.value = 'instagram_lp03';
+    tempForm.appendChild(fromInp);
+    document.body.appendChild(tempForm);
+    sessionStorage.removeItem('reserveData');
+    tempForm.submit();
+  });
+
+  function escHtml(str){
+    return String(str)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;');
+  }
+})();
+</script>
+</body>
+</html>
